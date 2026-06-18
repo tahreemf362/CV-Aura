@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { 
-  signInWithPopup, 
+  signInWithRedirect, 
   signOut, 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword,
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(true);
     try {
       if (isFirebaseConfigured) {
-        await signInWithPopup(auth, provider);
+        await signInWithRedirect(auth, provider);
       } else {
         // Simulated sign in fallback
         const mockUser = {
