@@ -3,14 +3,15 @@ import { useCV } from '../../hooks/useCV';
 import { Card } from '../ui/Card';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
-import { FolderGit2, Plus, Trash2, X } from 'lucide-react';
+import { FolderGit2, Plus, Trash2, X, ChevronDown, ChevronUp } from 'lucide-react';
 
-export const ProjectsForm: React.FC = () => {
+export const ProjectsForm: React.FC<{ isOpen?: boolean; onToggle?: () => void }> = ({ isOpen = true, onToggle }) => {
   const { cvData, addProject, updateProject, deleteProject } = useCV();
   const { projectsList } = cvData;
   const [newTech, setNewTech] = useState<{ [key: string]: string }>({});
 
-  const handleAddEmpty = () => {
+  const handleAddEmpty = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent accordion from toggling when clicking "Add"
     addProject({
       name: '',
       techStack: [],
@@ -48,17 +49,30 @@ export const ProjectsForm: React.FC = () => {
 
   return (
     <Card className="flex flex-col gap-5">
-      <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-1">
+      <div 
+        onClick={onToggle}
+        className={`flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-1 ${onToggle ? 'cursor-pointer select-none' : ''}`}
+      >
         <div className="flex items-center gap-2">
           <FolderGit2 className="w-5 h-5 text-aura-600" />
           <h3 className="text-lg font-bold font-heading">Projects</h3>
         </div>
-        <Button size="sm" onClick={handleAddEmpty} className="gap-1">
-          <Plus className="w-4 h-4" /> Add
-        </Button>
+        <div className="flex items-center gap-3">
+          {isOpen && (
+            <Button size="sm" onClick={handleAddEmpty} className="gap-1 z-10">
+              <Plus className="w-4 h-4" /> Add
+            </Button>
+          )}
+          {onToggle && (
+            <div>
+              {isOpen ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="flex flex-col gap-6">
+      {isOpen && (
+        <div className="flex flex-col gap-6">
         {projectsList.length === 0 ? (
           <p className="text-sm text-slate-400 text-center py-4">No projects added yet. Click "Add" to start.</p>
         ) : (
@@ -135,6 +149,7 @@ export const ProjectsForm: React.FC = () => {
           ))
         )}
       </div>
+      )}
     </Card>
   );
 };

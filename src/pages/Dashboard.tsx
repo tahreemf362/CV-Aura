@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Header from '../components/layout/Header';
 import PersonalInfoForm from '../components/form/PersonalInfoForm';
 import ServicesForm from '../components/form/ServicesForm';
@@ -12,7 +13,8 @@ import CoverLetterPreview from '../components/preview/CoverLetterPreview';
 import SkillsPosterPreview from '../components/preview/SkillsPosterPreview';
 
 import { useCV } from '../hooks/useCV';
-import { Printer, FileText, Award, FileCode } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { Printer, FileText, Award, FileCode, LogOut } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
 export const Dashboard = () => {
@@ -26,6 +28,10 @@ export const Dashboard = () => {
     skillsPosterData,
     setPosterTemplate
   } = useCV();
+
+  const { logout } = useAuth();
+  const [mobileView, setMobileView] = useState<'editor' | 'preview'>('editor');
+  const [expandedSection, setExpandedSection] = useState<string>('personal');
 
   const handlePrint = () => {
     window.print();
@@ -121,14 +127,83 @@ export const Dashboard = () => {
           </Button>
         </div>
 
+        {/* Mobile View Toggle & Logout Panel - visible only on mobile */}
+        <div className="flex lg:hidden justify-between items-center mb-6 gap-4 print:hidden">
+          <div className="flex-1 flex border border-slate-250 dark:border-neutral-800 p-1.5 rounded-2xl bg-white dark:bg-neutral-950 shadow-sm">
+            <button
+              onClick={() => setMobileView('editor')}
+              className={`flex-1 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+                mobileView === 'editor'
+                  ? 'bg-black text-white dark:bg-white dark:text-black shadow-md'
+                  : 'text-slate-500 dark:text-slate-450 hover:bg-slate-100 dark:hover:bg-neutral-900'
+              }`}
+            >
+              Edit Details
+            </button>
+            <button
+              onClick={() => setMobileView('preview')}
+              className={`flex-1 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+                mobileView === 'preview'
+                  ? 'bg-black text-white dark:bg-white dark:text-black shadow-md'
+                  : 'text-slate-500 dark:text-slate-450 hover:bg-slate-100 dark:hover:bg-neutral-900'
+              }`}
+            >
+              View Live Preview
+            </button>
+          </div>
+          <Button
+            onClick={logout}
+            variant="outline"
+            className="border-red-200/50 hover:border-red-500 text-red-500 dark:border-red-950 dark:hover:border-red-800 bg-white dark:bg-neutral-900 p-3 rounded-xl flex items-center justify-center shrink-0 shadow-sm"
+            aria-label="Logout"
+          >
+            <LogOut className="w-4.5 h-4.5" />
+          </Button>
+        </div>
+
         {/* Editor & Preview Split Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 print:block">
           
           {/* Editor Pane (Left Column) - hidden on print */}
-          <div className="lg:col-span-5 flex flex-col gap-6 print:hidden max-h-[calc(100vh-190px)] overflow-y-auto pr-2">
+          <div className={`lg:col-span-5 flex flex-col gap-6 print:hidden max-h-[calc(100vh-190px)] overflow-y-auto pr-2 ${mobileView === 'editor' ? 'flex' : 'hidden lg:flex'}`}>
             
-            {/* Template Selector Section */}
-            <div className="flex flex-col gap-2 p-4 border border-slate-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-neutral-900 shadow-sm">
+            {/* Render Tab Form */}
+            <div className="flex flex-col gap-6">
+              {activeTab === 'cv' && (
+                <>
+                  <PersonalInfoForm 
+                    isOpen={expandedSection === 'personal'} 
+                    onToggle={() => setExpandedSection(expandedSection === 'personal' ? '' : 'personal')} 
+                  />
+                  <ServicesForm 
+                    isOpen={expandedSection === 'services'} 
+                    onToggle={() => setExpandedSection(expandedSection === 'services' ? '' : 'services')} 
+                  />
+                  <ExperienceForm 
+                    isOpen={expandedSection === 'experience'} 
+                    onToggle={() => setExpandedSection(expandedSection === 'experience' ? '' : 'experience')} 
+                  />
+                  <ProjectsForm 
+                    isOpen={expandedSection === 'projects'} 
+                    onToggle={() => setExpandedSection(expandedSection === 'projects' ? '' : 'projects')} 
+                  />
+                  <EducationForm 
+                    isOpen={expandedSection === 'education'} 
+                    onToggle={() => setExpandedSection(expandedSection === 'education' ? '' : 'education')} 
+                  />
+                </>
+              )}
+              {activeTab === 'cover-letter' && <CoverLetterForm />}
+              {activeTab === 'poster' && <SkillsPosterForm />}
+            </div>
+            
+          </div>
+
+          {/* Preview Pane (Right Column) - full page on print */}
+          <div className={`lg:col-span-7 lg:sticky lg:top-[96px] lg:h-[calc(100vh-140px)] lg:overflow-y-auto print:static print:h-auto print:overflow-visible ${mobileView === 'preview' ? 'block' : 'hidden lg:block'}`}>
+            
+            {/* Relocated Template Selector Section */}
+            <div className="flex flex-col gap-2 p-4 mb-6 border border-slate-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-neutral-900 shadow-sm print:hidden">
               <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Select Template Style</span>
               <div className="grid grid-cols-3 gap-2 mt-1">
                 {options.map((optName, idx) => (
@@ -147,25 +222,6 @@ export const Dashboard = () => {
               </div>
             </div>
 
-            {/* Render Tab Form */}
-            <div className="flex flex-col gap-6">
-              {activeTab === 'cv' && (
-                <>
-                  <PersonalInfoForm />
-                  <ServicesForm />
-                  <ExperienceForm />
-                  <ProjectsForm />
-                  <EducationForm />
-                </>
-              )}
-              {activeTab === 'cover-letter' && <CoverLetterForm />}
-              {activeTab === 'poster' && <SkillsPosterForm />}
-            </div>
-            
-          </div>
-
-          {/* Preview Pane (Right Column) - full page on print */}
-          <div className="lg:col-span-7 lg:sticky lg:top-[96px] lg:h-[calc(100vh-140px)] lg:overflow-y-auto print:static print:h-auto print:overflow-visible">
             <div className="print:p-0">
               {activeTab === 'cv' && <CVPreview />}
               {activeTab === 'cover-letter' && <CoverLetterPreview />}
