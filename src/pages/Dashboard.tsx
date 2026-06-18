@@ -16,6 +16,8 @@ import { useCV } from '../hooks/useCV';
 import { useAuth } from '../context/AuthContext';
 import { Printer, FileText, Award, FileCode, LogOut } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { triggerMonetizedPrint } from '../utils/monetize';
+
 
 export const Dashboard = () => {
   const { 
@@ -34,7 +36,7 @@ export const Dashboard = () => {
   const [expandedSection, setExpandedSection] = useState<string>('personal');
 
   const handlePrint = () => {
-    window.print();
+    triggerMonetizedPrint();
   };
 
   const getTemplateInfo = () => {

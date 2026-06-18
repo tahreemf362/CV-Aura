@@ -1,5 +1,7 @@
 import { useCV } from '../../hooks/useCV';
 import { Download } from 'lucide-react';
+import { triggerMonetizedPrint } from '../../utils/monetize';
+
 
 export const CoverLetterPreview = () => {
   const { coverLetterData } = useCV();
@@ -161,7 +163,7 @@ export const CoverLetterPreview = () => {
     <div className="glass rounded-3xl p-5 md:p-12 shadow-2xl border border-slate-250 dark:border-slate-800 transition-all duration-300 relative group/preview print:bg-white print:border-none print:shadow-none print:rounded-none print:p-8 print:md:p-12">
       {/* Grey Floating Download Button */}
       <button 
-        onClick={() => window.print()}
+        onClick={triggerMonetizedPrint}
         className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-xl bg-slate-100 hover:bg-slate-250 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-slate-500 dark:text-neutral-450 transition-colors cursor-pointer print:hidden flex items-center justify-center shadow-sm z-30"
         title="Download PDF"
       >

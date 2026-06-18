@@ -1,5 +1,7 @@
 import { useCV } from '../../hooks/useCV';
 import { Download } from 'lucide-react';
+import { triggerMonetizedPrint } from '../../utils/monetize';
+
 
 export const SkillsPosterPreview = () => {
   const { skillsPosterData } = useCV();
@@ -163,7 +165,7 @@ export const SkillsPosterPreview = () => {
     <div className="transition-all duration-300 relative group/preview print:p-0">
       {/* Grey Floating Download Button */}
       <button 
-        onClick={() => window.print()}
+        onClick={triggerMonetizedPrint}
         className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-xl bg-slate-100/80 hover:bg-slate-200/90 dark:bg-neutral-900/80 dark:hover:bg-neutral-800/90 text-slate-650 dark:text-neutral-400 backdrop-blur-sm transition-colors cursor-pointer print:hidden flex items-center justify-center shadow-md z-30"
         title="Download PDF"
       >
