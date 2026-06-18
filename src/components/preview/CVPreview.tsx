@@ -1,4 +1,5 @@
 import { useCV } from '../../hooks/useCV';
+import { Download } from 'lucide-react';
 
 export const CVPreview = () => {
   const { cvData } = useCV();
@@ -371,7 +372,15 @@ export const CVPreview = () => {
   };
 
   return (
-    <div className="glass rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-250 dark:border-slate-800 transition-all duration-300">
+    <div className="glass rounded-3xl p-8 md:p-12 shadow-2xl border border-slate-250 dark:border-slate-800 transition-all duration-300 relative group/preview">
+      {/* Grey Floating Download Button */}
+      <button 
+        onClick={() => window.print()}
+        className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-xl bg-slate-100 hover:bg-slate-250 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-slate-500 dark:text-neutral-450 transition-colors cursor-pointer print:hidden flex items-center justify-center shadow-sm z-30"
+        title="Download PDF"
+      >
+        <Download className="w-4 h-4" />
+      </button>
       {selectedTemplate === 0 && renderClassicEditorial()}
       {selectedTemplate === 1 && renderMinimalGrid()}
       {selectedTemplate === 2 && renderBoldArchitect()}

@@ -1,4 +1,5 @@
 import { useCV } from '../../hooks/useCV';
+import { Download } from 'lucide-react';
 
 export const SkillsPosterPreview = () => {
   const { skillsPosterData } = useCV();
@@ -62,7 +63,7 @@ export const SkillsPosterPreview = () => {
   const renderCyberpunkPitch = () => {
     return (
       <div className="bg-zinc-950 text-slate-100 p-8 md:p-12 rounded-3xl shadow-2xl flex flex-col gap-6 font-sans border border-zinc-800 relative">
-        <div className="absolute top-4 right-4 flex items-center gap-1.5">
+        <div className="absolute top-4 right-14 flex items-center gap-1.5 print:hidden">
           <span className="w-2 h-2 rounded-full bg-lime-400 animate-pulse" />
           <span className="text-[8px] font-black tracking-widest text-lime-400 uppercase">System Active</span>
         </div>
@@ -159,7 +160,15 @@ export const SkillsPosterPreview = () => {
   };
 
   return (
-    <div className="transition-all duration-300">
+    <div className="transition-all duration-300 relative group/preview">
+      {/* Grey Floating Download Button */}
+      <button 
+        onClick={() => window.print()}
+        className="absolute top-4 right-4 md:top-6 md:right-6 p-2 rounded-xl bg-slate-100/80 hover:bg-slate-200/90 dark:bg-neutral-900/80 dark:hover:bg-neutral-800/90 text-slate-650 dark:text-neutral-400 backdrop-blur-sm transition-colors cursor-pointer print:hidden flex items-center justify-center shadow-md z-30"
+        title="Download PDF"
+      >
+        <Download className="w-4 h-4" />
+      </button>
       {selectedTemplate === 0 && renderAuroraNeonGrid()}
       {selectedTemplate === 1 && renderCyberpunkPitch()}
       {selectedTemplate === 2 && renderSunsetMinimalist()}
