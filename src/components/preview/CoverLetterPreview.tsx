@@ -158,7 +158,7 @@ export const CoverLetterPreview = () => {
   };
 
   return (
-    <div className="glass rounded-3xl p-5 md:p-12 shadow-2xl border border-slate-250 dark:border-slate-800 transition-all duration-300 relative group/preview">
+    <div className="glass rounded-3xl p-5 md:p-12 shadow-2xl border border-slate-250 dark:border-slate-800 transition-all duration-300 relative group/preview print:bg-white print:border-none print:shadow-none print:rounded-none print:p-8 print:md:p-12">
       {/* Grey Floating Download Button */}
       <button 
         onClick={() => window.print()}

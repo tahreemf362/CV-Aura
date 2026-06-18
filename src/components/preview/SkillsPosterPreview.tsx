@@ -8,7 +8,7 @@ export const SkillsPosterPreview = () => {
   // Template 0: The Aurora Neon Grid (Deep violet-purple gradient with fuchsia neon borders)
   const renderAuroraNeonGrid = () => {
     return (
-      <div className="bg-gradient-to-br from-indigo-950 via-purple-900 to-slate-950 text-white p-5 md:p-12 rounded-3xl shadow-2xl flex flex-col gap-6 font-sans relative overflow-hidden border border-purple-500/20">
+      <div className="bg-gradient-to-br from-indigo-950 via-purple-900 to-slate-950 text-white p-5 md:p-12 rounded-3xl shadow-2xl flex flex-col gap-6 font-sans relative overflow-hidden border border-purple-500/20 print:rounded-none print:shadow-none print:border-none print:min-h-screen">
         {/* Glow Effects */}
         <div className="absolute -top-20 -right-20 w-48 h-48 bg-fuchsia-500/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
@@ -62,7 +62,7 @@ export const SkillsPosterPreview = () => {
   // Template 1: The Cyberpunk Pitch (Dark zinc layout with electric cyan/lime gradient accents)
   const renderCyberpunkPitch = () => {
     return (
-      <div className="bg-zinc-950 text-slate-100 p-5 md:p-12 rounded-3xl shadow-2xl flex flex-col gap-6 font-sans border border-zinc-800 relative">
+      <div className="bg-zinc-950 text-slate-100 p-5 md:p-12 rounded-3xl shadow-2xl flex flex-col gap-6 font-sans border border-zinc-800 relative print:rounded-none print:shadow-none print:border-none print:min-h-screen">
         <div className="absolute top-4 right-14 flex items-center gap-1.5 print:hidden">
           <span className="w-2 h-2 rounded-full bg-lime-400 animate-pulse" />
           <span className="text-[8px] font-black tracking-widest text-lime-400 uppercase">System Active</span>
@@ -117,7 +117,7 @@ export const SkillsPosterPreview = () => {
   // Template 2: Sunset Minimalist (Vibrant orange-pink sunset gradient backdrop)
   const renderSunsetMinimalist = () => {
     return (
-      <div className="bg-gradient-to-br from-amber-500 via-rose-500 to-violet-650 text-white p-5 md:p-12 rounded-3xl shadow-2xl flex flex-col gap-8 font-sans border border-rose-400/20 relative">
+      <div className="bg-gradient-to-br from-amber-500 via-rose-500 to-violet-650 text-white p-5 md:p-12 rounded-3xl shadow-2xl flex flex-col gap-8 font-sans border border-rose-400/20 relative print:rounded-none print:shadow-none print:border-none print:min-h-screen">
         <div className="text-center flex flex-col gap-1">
           <span className="text-[9px] font-black uppercase tracking-[0.25em] text-amber-200">Creative Technologist</span>
           <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight mt-1 leading-none text-white drop-shadow-sm">
@@ -160,7 +160,7 @@ export const SkillsPosterPreview = () => {
   };
 
   return (
-    <div className="transition-all duration-300 relative group/preview">
+    <div className="transition-all duration-300 relative group/preview print:p-0">
       {/* Grey Floating Download Button */}
       <button 
         onClick={() => window.print()}
