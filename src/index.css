@@ -110,8 +110,9 @@
     display: block !important;
   }
 
-  /* Expand preview pane to cover full viewport */
+  /* Expand preview pane and force display during print */
   .lg\:col-span-7 {
+    display: block !important;
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 !important;

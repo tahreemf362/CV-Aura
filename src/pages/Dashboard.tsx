@@ -200,7 +200,7 @@ export const Dashboard = () => {
           </div>
 
           {/* Preview Pane (Right Column) - full page on print */}
-          <div className={`lg:col-span-7 lg:sticky lg:top-[96px] lg:h-[calc(100vh-140px)] lg:overflow-y-auto print:static print:h-auto print:overflow-visible ${mobileView === 'preview' ? 'block' : 'hidden lg:block'}`}>
+          <div className={`lg:col-span-7 lg:sticky lg:top-[96px] lg:h-[calc(100vh-140px)] lg:overflow-y-auto print:static print:h-auto print:overflow-visible print:block ${mobileView === 'preview' ? 'block' : 'hidden lg:block'}`}>
             
             {/* Relocated Template Selector Section */}
             <div className="flex flex-col gap-2 p-4 mb-6 border border-slate-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-neutral-900 shadow-sm print:hidden">
