@@ -88,11 +88,16 @@
 
 /* Printable Document Constraints */
 @media print {
+  @page {
+    margin: 0; /* hides browser-default headers (date, time, title) and footers (URL) */
+  }
+
   body {
     background: white !important;
     color: black !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    padding: 1.5cm; /* adds back professional margins inside the sheet */
   }
   
   * {
